@@ -1,144 +1,86 @@
-from django.shortcuts import render,get_object_or_404,redirect
-from posts.models import Post,Hashtag,Comment,Community,Badge
-from users.models import Profile
-from .serializers import PostSerializer,HashtagSerializer,CommunitySerializer,BadgeSerializer,ProfileSerializer,CommentSerializer
-from django.http import JsonResponse
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
-from rest_framework import status
 
-class PostRS:
-    def __init__(self,id,title,description,media,community,owner,hashtags):
-        self.id=id
-        self.title=title
-        self.description=description
-        self.media=media
-        self.community=community
-        self.owner=owner
-        self.hashtags=hashtags
+from posts.models import Post,Hashtag,Comment,Community,Badge,Contribution
+from users.models import Profile
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import generics
+from .serializers import (
+    CommunitySerializer, BadgeSerializer, HashtagSerializer,
+    PostSerializer, CommentSerializer, ContributionSerializer, ProfileSerializer
+)
+
 @api_view(['GET'])
 def getRoutes(request):
 
     routes = [
-        {'GET': '/api/posts'},
-        {'GET': '/api/post'},
-        {'GET': '/api/hashtags'},
-        {'GET': '/api/hashtag'},
-        {'GET': '/api/comments'},
-        {'GET': '/api/comment'},
-        {'GET': '/api/communities'},
-        {'GET': '/api/community'},
-        {'GET': '/api/badges'},
-        {'GET': '/api/badge'},
-        {'GET': '/api/profiles'},
-        {'GET': '/api/profile'},
+        {'GET/POST': '/api/posts/'},
+        {'PUT/DELETE': '/api/posts/'},
+        {'GET/POST': '/api/hashtags/'},
+        {'PUT/DELETE': '/api/hashtags/'},
+        {'GET/POST': '/api/comments/'},
+        {'PUT/DELETE': '/api/comments/'},
+        {'GET/POST': '/api/communities/'},
+        {'PUT/DELETE': '/api/communities/'},
+        {'GET/POST': '/api/badges/'},
+        {'PUT/DELETE': '/api/badges/'},
+        {'GET/POST': '/api/profiles/'},
+        {'PUT/DELETE': '/api/profiles/'},
 
     ]
     return Response(routes)
 
-@api_view(['GET', 'POST'])
-def getPosts(request):
-    if request.method == 'GET':
-        posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
-        return JsonResponse({'posts': serializer.data})
-    
-    if request.method == 'POST':
-        serializer = PostSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class CommunityListCreateView(generics.ListCreateAPIView):
+    queryset = Community.objects.all()
+    serializer_class = CommunitySerializer
 
+class CommunityDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Community.objects.all()
+    serializer_class = CommunitySerializer
 
-@api_view(['GET'])
-def getPost(request,pk):
-    try:
-        post=Post.objects.get(id=pk)
-    except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer =PostSerializer(post)
-    return Response(serializer.data)
+class BadgeListCreateView(generics.ListCreateAPIView):
+    queryset = Badge.objects.all()
+    serializer_class = BadgeSerializer
 
-@api_view(['GET'])
-def getHashtags(request):
-    hashtags= Hashtag.objects.all()
-    serializer=HashtagSerializer(hashtags,many=True)
-    return JsonResponse({'hashtags':serializer.data})
+class BadgeDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Badge.objects.all()
+    serializer_class = BadgeSerializer
 
-@api_view(['GET'])
-def getHashtag(request,pk):
-    try:
-        hashtag=Hashtag.objects.get(id=pk)
-    except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer =HashtagSerializer(hashtag)
-    return Response(serializer.data)
+class HashtagListCreateView(generics.ListCreateAPIView):
+    queryset = Hashtag.objects.all()
+    serializer_class = HashtagSerializer
 
+class HashtagDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Hashtag.objects.all()
+    serializer_class = HashtagSerializer
 
-@api_view(['GET','POST'])
-def getCommunities(request):
-    if request.method=='GET':
-        communities= Community.objects.all()
-        serializer=CommunitySerializer(communities,many=True)
-        return JsonResponse({'Communities':serializer.data})
-    if  request.method=='POST':
-        serializer=CommunitySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+class PostListCreateView(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
-@api_view(['GET'])
-def getCommunity(request,pk):
-    try:
-        community=Community.objects.get(id=pk)
-    except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer =CommunitySerializer(community)
-    return Response(serializer.data)
+class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
-@api_view(['GET'])
-def getBadges(request):
-    Badges= Badge.objects.all()
-    serializer=BadgeSerializer(Badges,many=True)
-    return JsonResponse({'Badges':serializer.data})
+class CommentListCreateView(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
 
-@api_view(['GET'])
-def getBadge(request,pk):
-    try:
-        badge=Badge.objects.get(id=pk)
-    except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer =BadgeSerializer(badge)
-    return Response(serializer.data)
-@api_view(['GET'])
-def getProfiles(request):
-    profiles= Profile.objects.all()
-    serializer=ProfileSerializer(profiles,many=True)
-    return JsonResponse({'Profiles':serializer.data})
+class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
 
+class ContributionListCreateView(generics.ListCreateAPIView):
+    queryset = Contribution.objects.all()
+    serializer_class = ContributionSerializer
 
-@api_view(['GET'])
-def getProfile(request,pk):
-    try:
-        profile=Profile.objects.get(id=pk)
-    except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer =ProfileSerializer(profile)
-    return Response(serializer.data)
+class ContributionDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Contribution.objects.all()
+    serializer_class = ContributionSerializer
 
-@api_view(['GET'])
-def getComments(request):
-    comments= Comment.objects.all()
-    serializer=CommentSerializer(comments,many=True)
-    return JsonResponse({'comments':serializer.data})
+class ProfileListCreateView(generics.ListCreateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
-@api_view(['GET'])
-def getComment(request,pk):
-    try:
-        comment=Comment.objects.get(id=pk)
-    except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer =CommentSerializer(comment)
-    return Response(serializer.data)
-
+class ProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
