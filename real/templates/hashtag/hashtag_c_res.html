@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<style>
+    img{
+        width: 30%;
+        height: 30%;
+    }
+</style>
+<body>
+    {% include 'home/navbar.html' %}
+    {% csrf_token %}
+    <h3>search by #{{hashtag.name}} in "{{community.name}}" community</h3><br>
+    {% for post in posts %}
+        <div class="post">
+            <h5>{{post.title}}</h5>
+            {% if post.media %}
+                <img src="{{post.media.url}}" alt="">
+            {% endif %}
+            <p>{{post.description}} <br>likes:{{post.likes.count}} comment:{{post.comment_count}}</p>
+
+            <br>
+        </div>
+    {% endfor %}
+</body>
+</html>

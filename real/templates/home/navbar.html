@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+        <title>Your Website</title>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <!-- Bootstrap Logo on the Left -->
+        <a href="#">
+            <img src="{% static 'images/logo.png' %}" width="30" height="30" class="logo-img" alt="Your Logo">
+        </a>
+
+        <!-- Customized Long Search Bar in the Middle -->
+        <form class="search-container" style="margin-left: auto;">
+          <input type="text" class="search-bar" placeholder="search">
+          <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+        </form>
+
+        <!-- Menu on the Right -->
+        <div class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" id="notificationDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-bell"></i>
+                  <span class="badge badge-danger">3</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown">
+                  <a class="dropdown-item" href="#">Notification 1</a>
+                  <a class="dropdown-item" href="#">Notification 2</a>
+                  <a class="dropdown-item" href="#">Notification 3</a>
+                  
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">View All Notifications</a>
+              </div>
+          </li>
+
+
+            <!-- Discover Icon -->
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-compass"></i>
+                </a>
+            </li>
+
+            <!-- Create Icon -->
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-plus-circle"></i>
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="profile-picture.jpg" alt="Profile" width="30" height="30" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Logout</a>
+                </div>
+            </li>
+        </div>
+    </nav>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-X4ZH5XA8BClqL78Lc6lCDlOWB0wR0b1KA5O9t14njoEQI6AZ6FweWVjx6ZGGI7ZS"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+      <script src="https://kit.fontawesome.com/2baadeb4f9.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

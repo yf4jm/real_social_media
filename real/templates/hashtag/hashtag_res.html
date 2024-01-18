@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'home/navbar.html' %}
+    {% csrf_token %}
+    <h3>search by #{{hashtag.name}}</h3><br>
+    {% for post in posts %}
+        <div class="post">
+            <h5>{{post.title}}</h5>
+            <p>community:{{post.community}}</p>
+            <p>{{post.description}} <br>likes:{{post.likes.count}} comment:{{post.comment_count}}</p>
+            <br><br>
+
+
+        </div>
+    {% endfor %}
+</body>
+</html>

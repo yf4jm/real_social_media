@@ -1,0 +1,44 @@
+{% load static %}
+{% load post_extra %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% csrf_token %}
+    <h1>Power Rankings</h1>
+    <table>
+        <tr>
+            <th>rank</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+          </tr>
+    {% for comm in community %}
+          <tr>
+            <td>
+                <p>{{ rank|add:forloop.counter0|add:1 }}</p>
+                
+
+            </td>
+           <td>
+                <div class="l_element">
+                    <a href="/c/{{comm.slug}}">{{comm.name}}</a>
+                </div>
+           </td>   
+
+           <td>
+                <div class="r_element">
+                    <p>{{comm.power}}</p>
+                </div>
+            </td>
+           
+        </div>
+        </tr>
+       
+    {% endfor %}
+    </table>
+</body>
+</html>
