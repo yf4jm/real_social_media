@@ -8,6 +8,7 @@ from django.db.models import F
 from django.contrib import messages
 # Create your views here.
 def home(request):
+    # test git
     community=Community.objects.order_by('-power')[:5]
     context={'community':community}
     return render(request,"home/main.html",context)
