@@ -77,3 +77,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.badge = validated_data.get('badge', instance.badge)
         instance.save()
         return instance
+    
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'

@@ -6,8 +6,9 @@ from rest_framework.response import Response
 from rest_framework import generics
 from .serializers import (
     CommunitySerializer, BadgeSerializer, HashtagSerializer,
-    PostSerializer, CommentSerializer, ContributionSerializer, ProfileSerializer
+    PostSerializer, CommentSerializer, ContributionSerializer, ProfileSerializer,UserSerializer
 )
+from django.contrib.auth.models import User
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -29,6 +30,13 @@ def getRoutes(request):
     ]
     return Response(routes)
 
+class UserListCreateView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 class CommunityListCreateView(generics.ListCreateAPIView):
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer

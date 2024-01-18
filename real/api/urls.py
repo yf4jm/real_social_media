@@ -9,22 +9,12 @@ from .views import (
                 PostListCreateView, PostDetailView,
                 CommentListCreateView, CommentDetailView,
                 ContributionListCreateView, ContributionDetailView,
-                ProfileListCreateView, ProfileDetailView
+                ProfileListCreateView, ProfileDetailView,UserListCreateView,UserDetailView
                     
                     )
 urlpatterns =[
-    # path('posts/',getPosts),
-    # path('post/<str:pk>',getPost),
-    # path('hashtags/',getHashtags),
-    # path('hashtag/<str:pk>',getHashtag),
-    # path('communities/',getCommunities),
-    # path('community/<str:pk>',getCommunity),
-    # path('badges/',getBadges),
-    # path('badge/<str:pk>',getBadge),
-    # path('profiles/',getProfiles),
-    # path('profile/<str:pk>',getProfile),
-    # path('comments/',getComments),
-    # path('comment/<str:pk>',getComment),
+    path('users/', UserListCreateView.as_view(), name='user-list'),
+    path('users/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
     path('communities/', CommunityListCreateView.as_view(), name='community-list-create'),
     path('communities/<uuid:pk>/', CommunityDetailView.as_view(), name='community-detail'),
 
@@ -45,10 +35,6 @@ urlpatterns =[
 
     path('profiles/', ProfileListCreateView.as_view(), name='profile-list-create'),
     path('profiles/<uuid:pk>/', ProfileDetailView.as_view(), name='profile-detail'),
-
-
-
-
     path('', getRoutes),
 
 
