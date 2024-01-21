@@ -10,55 +10,92 @@
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
         <title>Your Website</title>
 </head>
-
+<style>
+nav{
+    background-color: #302939;
+    height: 57px;
+}
+.search-bar{
+    width: 544px;
+    height: 39px;
+    border-radius: 14px;
+    border: 1px solid #555;
+}
+</style>
 <body>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar">
         <!-- Bootstrap Logo on the Left -->
-        <a href="#">
+        <a href="{% url 'home' %}">
             <img src="{% static 'images/logo.png' %}" width="30" height="30" class="logo-img" alt="Your Logo">
         </a>
 
         <!-- Customized Long Search Bar in the Middle -->
-        <form class="search-container" style="margin-left: auto;">
-          <input type="text" class="search-bar" placeholder="search">
-          <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
-        </form>
-
-        <!-- Menu on the Right -->
+        <!-- <form class="search-container" style="margin-left: auto;">
+        <a href="#"><i class="fa-solid fa-magnifying-glass" id="search-icon"></i></a>
+        <input type="text" class="search-bar" placeholder="search">
+          
+        </form> -->
         <div class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" id="notificationDropdown" role="button" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  <i class="fas fa-bell"></i>
-                  <span class="badge badge-danger">3</span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown">
-                  <a class="dropdown-item" href="#">Notification 1</a>
-                  <a class="dropdown-item" href="#">Notification 2</a>
-                  <a class="dropdown-item" href="#">Notification 3</a>
-                  
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">View All Notifications</a>
-              </div>
-          </li>
+            <form class="form-inline" id="searchForm" onsubmit="submitForm(); return false;">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button type="submit" class="input-group-text" id="basic-addon1">
+                            <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
+                        </button>
+                    </div>
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search" aria-describedby="basic-addon1">
+                </div>
+            </form>
+        </div>
+          <script>
+            function submitForm() {
+              // Get the value from the input field
+              var hashtagValue = $('#searchInput').val();
+                if (hashtagValue!=""){
+              // Construct the URL with the hashtag value
+              var url = "{% url 'search_by_hashtags' hashtag_name='__PLACEHOLDER__' %}".replace('__PLACEHOLDER__', encodeURIComponent(hashtagValue));
+          
+              // Navigate to the constructed URL
+              window.location.href = url;
+            }
+            }
+          </script>
+        <!-- Menu on the Right -->
 
-
-            <!-- Discover Icon -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-compass"></i>
-                </a>
-            </li>
-
-            <!-- Create Icon -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-plus-circle"></i>
-                </a>
-            </li>
-
+            {% if request.user.is_authenticated %}
+            <div class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="#" id="notificationDropdown" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-bell"></i>
+                      <span class="badge badge-danger">3</span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown">
+                      <a class="dropdown-item" href="#">Notification 1</a>
+                      <a class="dropdown-item" href="#">Notification 2</a>
+                      <a class="dropdown-item" href="#">Notification 3</a>
+                      
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">View All Notifications</a>
+                  </div>
+              </li>
+    
+    
+                <!-- Discover Icon -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-compass"></i>
+                    </a>
+                </li>
+    
+                <!-- Create Icon -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-plus-circle"></i>
+                    </a>
+                </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,11 +105,30 @@
                     <a class="dropdown-item" href="#">Profile</a>
                     <a class="dropdown-item" href="#">Settings</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Logout</a>
+                    <a class="dropdown-item" href="{% url 'logout'%}">Logout</a>
                 </div>
             </li>
+            {% else %}
+            <div class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-compass"></i>
+                </a>
+            </li>
+            <a href="{% url 'signin'%}">login/sign up</a>
+        </div> 
+            {% endif %}
+            
         </div>
     </nav>
+    {% for msg in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
 
     <!-- Bootstrap JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

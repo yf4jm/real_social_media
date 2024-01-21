@@ -1,12 +1,39 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from .models import Post,Hashtag,Comment,Community
 from users.models import Profile
+from django.contrib.auth.models import User
 from .forms import PostForm
 from django.db.models import Count
 from django.http import HttpResponse
 from django.db.models import F
 from django.contrib import messages
+from django.contrib.auth import login,authenticate,logout
 # Create your views here.
+
+
+
+def signinPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+
+
+    if request.method=="POST":
+        username=request.POST['username']
+        password=request.POST['password']
+        try:
+            user =User.objects.get(username=username)
+        except:
+            messages.error(request, "username or password invalid!")
+        user =authenticate(request, username=username,password=password)
+        if user is not None:
+            login(request,user)
+            messages.success(request, "login successsful!")
+            return redirect('home')
+    context={}
+    return render(request ,"login/login.html",context)
+def logoutUser(request):
+    logout(request)
+    return redirect('signin')
 def home(request):
     # test git
     community=Community.objects.order_by('-power')[:5]
