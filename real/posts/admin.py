@@ -4,7 +4,7 @@ from django.db.models import Count
 # Register your models here.
 from .models import Hashtag,Comment,Community,Post,Badge,Contribution
 class InfoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title','status', 'like_count','comment_count')
+    list_display = ('id', 'title','status','created_on', 'like_count','comment_count')
     def like_count(self, obj):
         return obj.likes.all().count()
     def comment_count(self, obj):

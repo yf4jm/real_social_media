@@ -40,8 +40,9 @@ def signupPage(request):
             user = form.save()
             messages.success(request, 'User account was created!')
             login(request, user)
-        # else:
-        #     messages.error(request, 'An error has occurred during registration')
+            return redirect('home')
+        else:
+            messages.error(request, 'An error has occurred during registration')
 
     context = {"form": form}
     return render(request, "login/signup.html", context)
