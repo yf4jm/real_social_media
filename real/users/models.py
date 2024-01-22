@@ -4,9 +4,11 @@ from django.contrib.auth.models import User
 import uuid
 
 # Create your models here.
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    icon =models.ImageField(default="no_icon.png")
     name= models.CharField(max_length=50)
     username=models.CharField(max_length=50)
     email=models.CharField(max_length=50,blank=True, null=True)

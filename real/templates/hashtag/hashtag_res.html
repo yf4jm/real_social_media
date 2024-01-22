@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+        img{
+        width: 30%;
+        height: 30%;
+    }
+</style>
 <body>
     {% include 'home/navbar.html' %}
     {% csrf_token %}
@@ -12,6 +18,9 @@
     {% for post in posts %}
         <div class="post">
             <h5>{{post.title}}</h5>
+            {% if post.media %}
+            <img src="{{post.media.url}}" alt="">
+            {% endif %}
             <p>community:{{post.community}}</p>
             <p>{{post.description}} <br>likes:{{post.likes.count}} comment:{{post.comment_count}}</p>
             <br><br>
