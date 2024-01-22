@@ -13,29 +13,7 @@ from django.contrib.auth.decorators import login_required
 
 
 
-def signinPage(request):
 
-    if request.user.is_authenticated:
-        return redirect('home')
-
-
-    if request.method=="POST":
-        username=request.POST['username']
-        password=request.POST['password']
-        try:
-            user =User.objects.get(username=username)
-        except:
-            messages.error(request, "username or password invalid!")
-        user =authenticate(request, username=username,password=password)
-        if user is not None:
-            login(request,user)
-            messages.success(request, "login successsful!")
-            return redirect('home')
-    context={}
-    return render(request ,"login/login.html",context)
-def logoutUser(request):
-    logout(request)
-    return redirect('signin')
 def home(request):
     # test git
     if request.user.is_authenticated:

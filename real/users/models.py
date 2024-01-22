@@ -10,7 +10,7 @@ class Profile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     icon =models.ImageField(default="no_icon.png")
     name= models.CharField(max_length=50)
-    username=models.CharField(max_length=50)
+    username=models.SlugField(max_length=50)
     email=models.CharField(max_length=50,blank=True, null=True)
     short_intro=models.CharField(max_length=160,blank=True, null=True)
     birth_date=models.DateField(blank=True, null=True)

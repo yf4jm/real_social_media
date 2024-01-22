@@ -1,7 +1,7 @@
 from django.urls import path,include
 from .views import (create_post,search_by_hashtags,home,
                     c_home,search_by_c_hashtags,power_rankings,
-                    post_details,updateproject,signinPage,logoutUser
+                    post_details,updateproject
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -14,8 +14,10 @@ urlpatterns = [
     path("leaderboards/communities/<int:page>",power_rankings,name="power_rankings"),
     path("c/<str:community_name>/post/<str:pk>",post_details,name="post_details"),
     path("c/<str:community_name>/update_post/<str:pk>",updateproject,name="updateproject"),
-    path("login",signinPage,name="signin"),
-    path("logout",logoutUser,name="logout")
+    
+    
+
+    
     
 ]
 
